@@ -1,0 +1,9 @@
+{
+  "name": "viam-agentic-kit",
+  "version": "0.1.0",
+  "description": "Obstacle setup skill and connection settings for the Viam MCP server at https://app.viam.com/mcp.",
+  "author": {
+    "name": "Viam",
+    "url": "https://www.viam.com"
+  }
+}
