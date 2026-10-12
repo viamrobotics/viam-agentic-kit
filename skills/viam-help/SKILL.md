@@ -28,7 +28,6 @@ The Viam MCP server exposes these tools. A client may show them with a prefix su
 | What does it run? | `read_machine_metadata` | What the part last reported about itself (OS, platform, host name, IP addresses, viam-server version), plus its location and organization. Lists the other parts as `other_parts`. |
 | How is it configured? | `read_machine_config` | Every part's config as saved, plus the resolved contents of each imported fragment. |
 | What is this model? | `get_registry_item_information` | Module and model documentation for an `api` and `model` pair taken from the config. |
-| What do the docs say? | `read_viam_docs` | Passages from Viam's documentation for a concept or config question. |
 
 ## Steps
 
@@ -43,7 +42,6 @@ Rules:
 
 - Ids are opaque. Use only an id a tool returned in this conversation.
 - Keep calls to what the question needs. Do not read every part or look up every model.
-- When a tool given an id says the resource is not found or not accessible, stop and ask. That is often a permission problem, not a missing machine.
 
 ## Missing information
 

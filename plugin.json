@@ -8,6 +8,5 @@
     "url": "https://www.viam.com"
   },
   "homepage": "https://github.com/viamrobotics/viam-agentic-kit",
-  "repository": "https://github.com/viamrobotics/viam-agentic-kit",
-  "keywords": ["viam", "robotics", "fleet", "mcp"]
+  "repository": "https://github.com/viamrobotics/viam-agentic-kit"
 }
