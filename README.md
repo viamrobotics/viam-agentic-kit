@@ -11,7 +11,7 @@ The MCP server is part of the Viam app and is served at `https://app.viam.com/mc
 | `plugin.json` | [Agent Plugins 1.0.0](https://agent-plugins.org/specification) manifest | Codex, ChatGPT, Cursor |
 | `mcp.json` | Agent Plugins MCP configuration: `https://app.viam.com/mcp` over Streamable HTTP, no headers, no secrets | Codex, ChatGPT, Cursor; Claude Code through its catalog entry |
 | `skills/obstacle-setup/SKILL.md` | [Agent Skills](https://agentskills.io/specification) | Every client |
-| `agents/obstacle-planner.md` | [Claude Code subagent](https://code.claude.com/docs/en/sub-agents), `@agent-viam-agentic-kit:obstacle-planner` | Claude Code and Cowork (see Claude); Cursor documents agents only for its own plugin format, though its 3.24.12 loader also scans `agents/` |
+| `agents/obstacle-planner.md` | [Claude Code subagent](https://code.claude.com/docs/en/sub-agents), `@agent-viam-agentic-kit:obstacle-planner` | Claude Code and Cowork (Cowork install untested, see Claude); Cursor documents agents only for its own plugin format, though its 3.24.12 loader also scans `agents/` |
 | `.agents/plugins/marketplace.json` | Codex marketplace catalog | Codex CLI, ChatGPT desktop app, ChatGPT workspace import |
 | `.claude-plugin/marketplace.json` | Claude Code marketplace catalog | Claude Code; also accepted by Codex and ChatGPT as a Claude-compatible fallback; claude.ai marketplace import untested (see Claude) |
 | `.cursor-plugin/marketplace.json` | Cursor marketplace catalog | Cursor team marketplaces |
