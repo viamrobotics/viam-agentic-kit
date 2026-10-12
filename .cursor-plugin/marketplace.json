@@ -1,0 +1,7 @@
+{
+  "name": "viam",
+  "owner": { "name": "Viam" },
+  "plugins": [
+    { "name": "viam-agentic-kit", "source": "." }
+  ]
+}
