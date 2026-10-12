@@ -15,7 +15,7 @@ The MCP server is part of the Viam app and is served at `https://app.viam.com/mc
 | `.claude-plugin/marketplace.json` | Marketplace catalog with one entry: the plugin at the repository root | Claude Code, claude.ai, Codex, ChatGPT |
 | `skills/obstacle-setup/SKILL.md` | [Agent Skills](https://agentskills.io/specification) | Every client |
 
-The two manifests and the two MCP files carry the same values because the clients read different file names. Change them together. The skill is the only instruction set; there are no per-client copies, subagents, hooks, or scripts.
+The two manifests carry the same name, version, description, author, homepage, and repository, and the two MCP files the same server, because the clients read different file names. Change them together. The skill is the only instruction set; there are no per-client copies, subagents, hooks, or scripts.
 
 The skill, `obstacle-setup`, sets up motion-planning obstacles for an arm: the table, pick and place markers, walls and other boxes, and frame troubleshooting. It creates and changes machine configuration through the server's write tools, which save immediately with no undo, so it tells the assistant to confirm the machine and the numbers with the user first. Clients prompt before each write tool call because the server does not mark those tools read-only.
 
@@ -32,11 +32,11 @@ Two things must be true for tool calls to succeed:
 
 ## Marketplace
 
-The catalog is `.claude-plugin/marketplace.json`. It names the marketplace `viam` and lists one plugin, `viam-agentic-kit`, whose source is the repository root, so the plugin id is `viam-agentic-kit@viam` in every client that installs from it.
+The catalog is `.claude-plugin/marketplace.json`. It names the marketplace `viam` and lists one plugin, `viam-agentic-kit`, whose source is the repository root. Claude Code and Codex install it as `viam-agentic-kit@viam`; claude.ai and ChatGPT pick the plugin by name in their UI, and a plugin added on claude.ai reaches Claude Code under the id `viam-agentic-kit@synced`.
 
-Claude Code and claude.ai read this file natively. Codex and the ChatGPT desktop app read it as a Claude-compatible catalog, and a ChatGPT workspace import accepts it, so one file serves four clients. Cursor reads only `.cursor-plugin/marketplace.json`, which this repository does not ship (see Cursor below).
+Claude Code and claude.ai read this file natively. Codex and the ChatGPT desktop app read it as a Claude-compatible catalog, and a ChatGPT workspace import accepts it, so one file serves four clients. Cursor does not read it: Cursor's team marketplaces are imported from a repository URL in its Dashboard, and its own catalog format, `.cursor-plugin/marketplace.json`, is documented for multi-plugin repositories (see Cursor below).
 
-Register the catalog from a local checkout or from GitHub. The repository is `viamrobotics/viam-agentic-kit`; its visibility is internal, so a client needs GitHub access that can read it.
+Register the catalog from a local checkout or from GitHub. The repository is `viamrobotics/viam-agentic-kit`; its visibility is internal, so a client needs GitHub access that can read it. The GitHub forms below read the default branch, which does not hold this kit until it is merged. Until then, name the branch where the client allows it: `--ref <branch>` for Codex, `#<branch>` for Claude Code, and the **Branch, tag, or commit** field of a ChatGPT workspace import. claude.ai's **Add marketplace** and **Sync from GitHub** have no branch option, so those two flows work only after the merge.
 
 ## Install
 
@@ -70,7 +70,7 @@ ChatGPT gets the plugin from a marketplace and the tools from the plugin's MCP s
 
 Desktop app: OpenAI documents the desktop app as the place to install and test a local plugin, from a marketplace registered with `codex plugin marketplace add` as in the Codex section. A plugin that declares an MCP server is marked **Desktop only**, so it does not load in ChatGPT on the web or on mobile.
 
-Workspace: an admin opens **Admin > Plugins**, selects **Add**, then **Import marketplace**, and enters the repository URL `https://github.com/viamrobotics/viam-agentic-kit` with **Path** left empty. OpenAI's import accepts a Claude-compatible catalog at `.claude-plugin/marketplace.json`. The imported plugin is again Desktop only.
+Workspace: an admin opens **Admin > Plugins**, selects **Add**, then **Import marketplace**, and enters the repository URL `https://github.com/viamrobotics/viam-agentic-kit` in **Source**, with **Path** left empty and, until the kit is merged, this branch in **Branch, tag, or commit**. OpenAI's import accepts a Claude-compatible catalog at `.claude-plugin/marketplace.json`. The imported plugin is again Desktop only.
 
 Web, tools only: open **Plugins**, select the plus button, then **Add custom MCP server**. Enter a name, the server URL `https://app.viam.com/mcp`, and choose **OAuth** for authentication. Create it as a plugin, install it, and mention it with `@` in a prompt. Adding a custom MCP server needs developer mode. OpenAI's Help Center documents it for Business and Enterprise/Edu workspaces on ChatGPT web, where an admin turns it on under **Workspace Settings > Permissions & Roles** and each eligible user then enables it in their own settings; Pro users can enable it themselves but can connect only MCP servers with read/fetch permissions, which this server, with its write tools, may not satisfy. See [Developer mode and MCP apps in ChatGPT](https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt).
 
@@ -82,7 +82,7 @@ Claude on the web and in the desktop app installs the plugin from the marketplac
 
 On a Team or Enterprise plan, an Owner can instead sync the repository for everyone under **Organization settings > Plugins & skills** with **Add**, then **Sync from GitHub**. Organization sync requires the marketplace repository to be private or internal on github.com, which this one is, and the Claude GitHub App installed on it. Members then find the plugin under **Customize > Plugins**, and an Owner adds the connector for the organization before members connect with their own accounts.
 
-A plugin you add on claude.ai also reaches Claude Code as a synced plugin the next time you start a session signed in to the same account. Neither claude.ai flow was run here.
+A plugin you add on claude.ai also reaches Claude Code as a synced plugin the next time you start a session signed in to the same account. Both claude.ai flows read the repository's default branch and offer no branch selector, so they find the kit only after it is merged to `main`. Neither flow was run here.
 
 ### Claude Code
 
@@ -100,7 +100,7 @@ On Claude Code 2.1.292 or later, the first two commands collapse into one:
 claude plugin install viam-agentic-kit --marketplace viamrobotics/viam-agentic-kit
 ```
 
-Inside a session the skill is `/viam-agentic-kit:obstacle-setup` and `/mcp` lists `plugin:viam-agentic-kit:viam`. The browser sign-in was not run here. Starting Claude Code inside the checkout itself also offers the repository's project-level `.mcp.json` server, named `viam`, for approval; decline it when the plugin is installed, or use it instead of the plugin for a one-off session.
+Inside a session the skill is `/viam-agentic-kit:obstacle-setup` and `/mcp` lists `plugin:viam-agentic-kit:viam`. The browser sign-in was not run here. Starting Claude Code inside the checkout itself also offers the repository's project-level `.mcp.json` server, named `viam`, for approval; decline it when the plugin is installed, or use it instead of the plugin for a one-off session. Headless runs in the checkout (`claude -p`) load that project server without asking, so with the plugin installed they get the Viam tools twice; to keep only the plugin's copy, list `viam` under `disabledMcpjsonServers` in `.claude/settings.local.json`.
 
 ### Cursor
 
@@ -112,7 +112,7 @@ git clone https://github.com/viamrobotics/viam-agentic-kit.git ~/.cursor/plugins
 
 Then restart Cursor or run **Developer: Reload Window**. Cursor reads the root `plugin.json`, the `skills/` directory, and `mcp.json`. Open **Customize** in the sidebar to confirm the `obstacle-setup` skill and the `viam` MCP server are listed, and sign in to Viam from the server's entry before using the tools; Cursor supports OAuth for remote servers, but this sign-in was not run here. The skill is `/obstacle-setup` in Agent chat. On Teams and Enterprise plans, admins control local plugins with **Allow Local Plugin Imports** under **Dashboard > Settings > Security & Identity > Marketplace and Plugins**; it is off by default on Enterprise.
 
-Marketplace discovery is not available in Cursor from this repository. Cursor's catalog format is `.cursor-plugin/marketplace.json`, and its documentation resolves each entry through a `.cursor-plugin/plugin.json` manifest, which an Agent Plugins layout does not have. Cursor's docs say team marketplaces can distribute Agent Plugins, but do not say how an entry points at one, so no Cursor catalog is shipped and no Cursor flow was run.
+Marketplace discovery in Cursor is a Teams and Enterprise feature and was not run here. Cursor's docs say team marketplaces can distribute Agent Plugins, and the path is the Dashboard under **Plugins & MCPs**, where an admin uses **Import from Repo** with this repository's URL (GitHub, GitLab, Bitbucket, and Azure DevOps are accepted), after which members install from **Customize**. Cursor's own catalog format, `.cursor-plugin/marketplace.json`, is documented for multi-plugin repositories: for each entry the parser looks for a `.cursor-plugin/plugin.json`, merges it if found, and otherwise falls back to folder-based discovery, but the docs show no entry pointing at an Agent Plugins root `plugin.json`, so this repository ships no Cursor catalog. Treat the import as untested; if it does not index the plugin, the local plugin folder above is the verified alternative.
 
 ## Try it
 
@@ -134,11 +134,11 @@ Verified on Linux with the files in this repository. "OAuth discovery" means the
 
 | Client | Catalog | Verified |
 | --- | --- | --- |
-| Codex CLI 0.162.0 | `.claude-plugin/marketplace.json` | marketplace add from a local path, plugin install, skill listed as `viam-agentic-kit:obstacle-setup` in the rendered session prompt, `viam` listed by `codex mcp list`, OAuth discovery |
+| Codex CLI 0.162.0 | `.claude-plugin/marketplace.json` | marketplace add from a local path and from GitHub (`--ref` to this branch), plugin install, skill listed as `viam-agentic-kit:obstacle-setup` in the rendered session prompt, `viam` listed by `codex mcp list`, OAuth discovery |
 | ChatGPT | same file, via import | not run; follows OpenAI's plugin management and custom MCP server documentation |
 | Claude (claude.ai) | same file | not run; follows Claude's plugin and organization sync documentation |
-| Claude Code 2.1.296 | same file | `claude plugin validate --strict` passes on the repository, marketplace add from a local path, plugin install, inventory lists the skill and the `viam` server, OAuth discovery for `plugin:viam-agentic-kit:viam` |
-| Cursor | none | not run; marketplace discovery not supported by this layout |
+| Claude Code 2.1.296 | same file | `claude plugin validate --strict` passes on the repository, marketplace add from a local path and from GitHub (`#branch`), the one-step `--marketplace` install, plugin install, inventory lists the skill and the `viam` server, OAuth discovery for `plugin:viam-agentic-kit:viam` |
+| Cursor | none; Dashboard import from the repository URL | not run; Cursor documents team-marketplace distribution of Agent Plugins, untested here |
 
 `plugin.json` and `mcp.json` validate against the Agent Plugins 1.0.0 JSON Schemas, `claude plugin validate --strict` passes on the repository (it checks the Claude manifest, the catalog, `.mcp.json`, and the skill), and the skill passes the Agent Skills reference validator (`agentskills validate`). The endpoint's tool catalog was confirmed live through an authenticated claude.ai custom connector: `list_organizations` and `list_machines` returned data, and no Viam resource was changed.
 

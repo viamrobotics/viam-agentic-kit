@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "viam-agentic-kit",
   "version": "0.1.0",
-  "description": "Portable skill and connection settings for the Viam MCP server at https://app.viam.com/mcp, so an AI assistant can inspect a Viam fleet with the user's own permissions.",
+  "description": "Obstacle setup skill and connection settings for the Viam MCP server at https://app.viam.com/mcp.",
   "author": {
     "name": "Viam",
     "url": "https://www.viam.com"

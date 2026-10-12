@@ -191,7 +191,7 @@ Solution:
 1. Read the component with `read_machine_config` and confirm it has a `frame` with `parent` set (`world` for a fixed obstacle)
 2. If not, patch the frame with `update_machine_config_item` as in "Creating or fixing an obstacle"
 3. If the obstacle comes from a fragment, the fragment has to be fixed — the tool cannot patch fragment-provided components
-4. Save, then confirm the shape appears in the 3D scene at the expected place
+4. Confirm the shape appears in the 3D scene at the expected place
 
 ## Troubleshooting: motion planning fails
 
