@@ -1,11 +1,7 @@
 {
   "name": "viam",
-  "description": "Viam agentic kit: an obstacle setup skill and the Viam MCP server connection.",
   "owner": { "name": "Viam" },
   "plugins": [
-    {
-      "name": "viam-agentic-kit",
-      "source": "./"
-    }
+    { "name": "viam-agentic-kit", "source": "./", "mcpServers": "./mcp.json" }
   ]
 }

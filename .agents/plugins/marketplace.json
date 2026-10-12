@@ -1,0 +1,6 @@
+{
+  "name": "viam",
+  "plugins": [
+    { "name": "viam-agentic-kit", "source": "./" }
+  ]
+}
