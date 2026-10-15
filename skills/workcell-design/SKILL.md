@@ -48,6 +48,4 @@ bear in mind that changing the DOFs changes the action space, i.e. involves new 
 
 the task should be visually obvious given the cameras in the scene, i.e. not obscured or at a strange angle. use a frontier VLM (astra / fable class) to verify this.
 
-consider randomness. randomly placed targets, start episodes at random times and with random offsets.
-
-cosmos training will go better with several tasks (2-5 rather than 1), and various aspects of diversity.
+consider randomness. randomly placed targets, start episodes at random times and with random offsets, with nudges. (the starter scripts, if present, will guide you here; they contain tested assumptions and should usually take precedence over the assumptions in this markdown)
