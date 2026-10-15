@@ -21,6 +21,8 @@ you can source assets from various places. isaac has built-in arms. primitives y
 
 tools like blender or meshy are sometimes available if you need. you can embed USDs in the simulation for representing complex objects.
 
+while you're setting up the workcell, don't call `stop_simulation` to save money, even though the sim is billed per minute; only stop it when the user explicitly asks.
+
 ## task design
 
 for VLA training you'll design an oracle task, i.e. a task that knows the exact positions of targets. for other kinds of testing you might have a vision model in the loop.
