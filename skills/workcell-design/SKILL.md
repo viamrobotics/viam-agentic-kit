@@ -1,6 +1,6 @@
 ---
-name: sim-workcell-design
-description: guidance for designing a simulated workcell and tasks
+name: workcell-design
+description: Guidance for designing a simulated workcell and tasks. This is intended for designing simulation workcells; don't use this guidance for production robots.
 ---
 
 ## Motivation
