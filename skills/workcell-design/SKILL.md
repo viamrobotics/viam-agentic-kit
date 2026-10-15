@@ -1,6 +1,6 @@
 ---
-name: sim-workcell-design
-description: guidance for designing a simulated workcell and tasks
+name: workcell-design
+description: Guidance for designing a simulated workcell and tasks. This is intended for designing simulation workcells; don't use this guidance for production robots.
 ---
 
 ## Motivation
@@ -27,16 +27,25 @@ for VLA training you'll design an oracle task, i.e. a task that knows the exact 
 
 work with the user; if they want to leave it to you, delegate it to a frontier model with good spatial reasoning (astra / fable class). you'll need to watch out for motion envelopes, overlapping, compatible sizes.
 
+the user likely has an `oracle_episode.py` script for you to customize; try to keep to the patterns in there:
+- start pose randomization
+- joint nudges
+- random initial placement of objects in the scene (including the object to be picked and distractor objects)
+
+Those will matter for training quality.
+
+as you make changes, ask the user if they want to use git to make these edits on a branch so that known-good logic is kept in history.
+
+for prototyping, offer to manually execute the motion through the mcp before changing any code.
+
 ## success detection
 
 it's important to be able to detect success, especially if you want to collect many episodes. delegate to a frontier model for this. typically a success probe will look at the location of an object that is to be moved, but this can be time sensitive (for example probing before a drop, or after the episode ends when a gripper correctly relaxes).
 
-## Considerations for VLAs
+## Considerations for cosmos 3 policies
 
 bear in mind that changing the DOFs changes the action space, i.e. involves new work on the inference side.
 
 the task should be visually obvious given the cameras in the scene, i.e. not obscured or at a strange angle. use a frontier VLM (astra / fable class) to verify this.
 
-consider randomness. randomly placed targets, start episodes at random times and with random offsets.
-
-VLA training will go better with several tasks (2-5 rather than 1), and various aspects of diversity.
+consider randomness. randomly placed targets, start episodes at random times and with random offsets, with nudges. (the starter scripts, if present, will guide you here; they contain tested assumptions and should usually take precedence over the assumptions in this markdown)
