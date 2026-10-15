@@ -29,7 +29,7 @@ work with the user; if they want to leave it to you, delegate it to a frontier m
 
 ## success detection
 
-it's important to be able to detect success, especially if you want to collect many episodes. delegate to a frontier model for this. typically a success probe will look at the location of an object that is to be moved, but this can be time sensitive (for example probing before a drop, or after the episode ends when a gripper correctly relaxes).
+it's important to be able to detect success, especially if you want to collect many episodes, and the same check scores the trained policy later (see the `policy-eval` skill). write the check before the oracle, as a pure function of simulator state (object poses, gripper holding state), never from what the script commanded. a success probe typically looks at the location of the object to be moved, and it is time sensitive: require the final state to hold for a few samples, and for place tasks require the gripper to have released (probing before the drop, or while the block is still in the jaws, gives false successes). give it stages (reached, grasped, lifted, placed) so failed episodes and rollouts say how far they got. cosmos-tutorial's `episodes/task_check.py` is the pattern; audit a new check with `check_task.py` (fresh scene is not success, the oracle is success, a wrong ending is not) before generating a dataset. delegate the spatial parts to a frontier model if needed, but the audit is not optional.
 
 ## Considerations for VLAs
 
