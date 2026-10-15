@@ -9,7 +9,7 @@ the module ships several component modules like arms and camera, and also a cent
 
 ## Populating a scene
 
-(todo: how prims work in :world attrs, embedded USDs, where to look for new arms and how to connect them to the :arm model, using blender where needed, ref to workcell-design)
+you can define primitives and embedded USDs in the :sim:world model's attribute config.
 
 when you add an object, use the get image API to read a few of the available cameras and inspect yourself to make sure the scene looks correct. it's okay to do a few turns of interactive improvement
 
@@ -17,7 +17,7 @@ if you're debugging reachability, offer to the user to run through target locati
 
 ## Framesystem
 
-(todo: fill in which components respect framesystem and which don't)
+Most components (cameras, arms, etc) respect the viam framesystem; not all do. If you run into trouble positioning something with the framesystem, look for config attrs on the specific model.
 
 ## Viam UI 3d viewer
 

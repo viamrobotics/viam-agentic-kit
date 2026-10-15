@@ -5,18 +5,15 @@ description: Guidance for creating training data for policy training
 
 ## Helper scripts
 
-In the cosmos-tutorial repo
+In the cosmos-tutorial repo, there are `batch_episodes.py` and `oracle_episode.py` scripts which are templates for designing and collecting episodes that will lead to good training data.
 
-when calling these scripts, pass down `VIAM_API_KEY` and `VIAM_API_KEY_ID` environment for the target robot from the mcp. make sure to use a key scoped to the robot.
-
-> THAT DOESN"T WORK ^^^
+when calling these scripts, you'll need credentials, most likely from /etc/viam.json (automatic) or ./viam.json (pass cli arg). the part ID in viam.json should be the same as what you're interacting with through the MCP; if it's the first time you're touching a robot, look up its name and confirm it's the one the user expects.
 
 ## Manual run-throughs
 
-...
+when designing the motions for a robot task, you can do manual runthroughs using mcp commands. your call when to do this in python vs issuing the commands directly, but 'direct' will better for demoing short sequences while the user watches a camera.
 
-
-when you lift something, check the simulator state to make sure that it really was lifted.
+when you lift or manipulate something, check the simulator state to make sure that it really was lifted.
 
 when you issue mcp grip commands, use `disable_sessions=True` to prevent it from relaxing when the connection closes. only do this for grip commands.
 

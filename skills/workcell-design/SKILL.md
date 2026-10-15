@@ -27,16 +27,12 @@ for VLA training you'll design an oracle task, i.e. a task that knows the exact 
 
 work with the user; if they want to leave it to you, delegate it to a frontier model with good spatial reasoning (astra / fable class). you'll need to watch out for motion envelopes, overlapping, compatible sizes.
 
-TODO TEST SUBAGENT
-
 the user likely has an `oracle_episode.py` script for you to customize; try to keep to the patterns in there:
 - start pose randomization
 - joint nudges
 - random initial placement of objects in the scene (including the object to be picked and distractor objects)
 
 Those will matter for training quality.
-
-TODO FIND DEFAULTS SOMEWHERE
 
 as you make changes, ask the user if they want to use git to make these edits on a branch so that known-good logic is kept in history.
 
