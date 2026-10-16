@@ -56,6 +56,6 @@ consider randomness. randomly placed targets, start episodes at random times and
 
 ## model requirements and extra help
 
-when you can't resolve a layout, trajectory, motion-envelope, reachability, or collision question, or hits the wall on other hard problems that benefit from visual or spatial reasoning, including diagnosing episode failure, delegate to the visual-spatial subagent. (codex: request a gpt-6 astra subagent, or 5.6 sol if astra is not available).
+when you can't resolve a layout, trajectory, motion-envelope, reachability, or collision question, or hits the wall on other hard problems that benefit from visual or spatial reasoning, including diagnosing episode failure, delegate to the visual-spatial subagent. (codex: request a gpt-6 astra subagent, or 5.6 sol if astra is not available). On harnesses with access to many models (through e.g. openrouter), prefer astra to fable.
 
 if these models are not available, or the root model is less capable than opus 5.5 / sol 5.6, warn the user at the top of the session that these tasks benefit from access to those models.
