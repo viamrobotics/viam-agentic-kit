@@ -30,3 +30,7 @@ some state can be refreshed without a module restart, e.g. you can move camera f
 ## Caching and startup slowness
 
 isaac can be slow on first start or after some scene modifications because it needs to rebuild shader state. this happens in sim world steps, not immediately on boot. look for isaac-sim:world model reconfiguring for multiple minutes. restarting the module should be quick because these things are cached. if restarts are slow as well, your cache location may be getting deleted. note it is sometimes in the venv.
+
+## Keeping the simulation running
+
+a simulation is billed per minute while it runs, but don't call `stop_simulation` to save money while the sim is being set up. stopping it mid-setup interrupts the user's work, and starting it again takes a few minutes before the part is back online. it already stops on its own when it sits idle. only stop it when the user explicitly asks.

@@ -17,6 +17,8 @@ when you lift or manipulate something, check the simulator state to make sure th
 
 when you issue mcp grip commands, use `disable_sessions=True` to prevent it from relaxing when the connection closes. only do this for grip commands.
 
+don't call `stop_simulation` to save money between run-throughs or capture runs, even though the sim is billed per minute; only stop it when the user explicitly asks.
+
 ## Capturing
 
 The user should give you a `batch_episodes.py` script that you can modify if needed. Before running it, check the robot's config and set CLI args accordingly (number of cameras, component names, etc).
