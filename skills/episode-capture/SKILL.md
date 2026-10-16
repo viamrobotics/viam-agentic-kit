@@ -33,6 +33,10 @@ You can download datasets through the SDK to inspect video and parquet.
 
 A good number for a starter training run is 50. (A compromise between quality and generation / training time). Go to 100 if the resultant policy needs to be smoother.
 
+## success state
+
+The last frame of an episode should be a success state. E.g. if the task is 'pick up the block', don't then drop the block before ending the episode; end with it picked up.
+
 ## multiple tasks
 
 it's possible to train a reasonable policy with a single task, and for simplicity, that's our beginner flow. if after that the user wants to increase model quality, multiple tasks will improve it (even for the original task prompt).

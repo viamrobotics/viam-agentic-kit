@@ -17,9 +17,13 @@ consider constraints like the workspace of the arm, whether the gripper can get 
 
 ## scene design
 
-you can source assets from various places. isaac has built-in arms. primitives you can generate on your own.
+you can source assets from various places. isaac has built-in arms. box primitives you can generate on your own.
 
 tools like blender or meshy are sometimes available if you need. you can embed USDs in the simulation for representing complex objects.
+
+## working with fragments
+
+some configs are based on fragments (shared json templates). unless the user explicitly wants to edit a fragment, don't put edits in them, put them in the machine. the `update_machine_config_item` call will refuse to allow edits to components from fragments (check its docs though, it may have been patched). the alternative is to call UpdateRobotPart (but please do a read first to avoid race conditions).
 
 ## task design
 
