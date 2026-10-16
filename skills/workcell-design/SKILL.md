@@ -23,7 +23,7 @@ tools like blender or meshy are sometimes available if you need. you can embed U
 
 ## working with fragments
 
-some configs are based on fragments (shared json templates). unless the user explicitly wants to edit a fragment, don't put edits in them, put them in the machine. the `update_machine_config_item` call will refuse to allow edits to components from fragments (check its docs though, it may have been patched). the alternative is to call UpdateRobotPart (but please do a read first to avoid race conditions).
+some configs are based on fragments (shared json templates). unless the user explicitly wants to edit a fragment, don't put edits in them, put them in the machine. the `update_machine_config_item` call will refuse to allow edits to components from fragments (check its docs though, it may have been patched). the alternative is to call UpdateRobotPart (but please read the config immediately before to avoid race conditions). if you do that, you'll need separate robot credentials. look in /etc/viam.json and ./viam.json but *make sure* it's for the same robot (using the part ID in the json config). instruct the user if you can't find the creds that they can get them from 'machine cloud credentials' on the 'ONLINE' box on the robot page and make it clear this is to support a workaround for a pending MCP feature.
 
 ## task design
 
