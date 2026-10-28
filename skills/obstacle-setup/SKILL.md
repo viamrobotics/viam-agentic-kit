@@ -21,7 +21,7 @@ Creating an obstacle is always two calls, because `add_machine_config_item` cann
 1. `add_machine_config_item` with `item_type` `component`, the obstacle's `name`, `api` `rdk:component:generic`, `model` `viam:obstacle-pack:obstacle`, `module_id` `viam:obstacle-pack`, and `attributes` holding only `geometries`: one geometry per component, with `type`, its dimensions in mm, and a `label`. Never put `parent` or any frame key inside a geometry entry; it is silently dropped.
 2. `update_machine_config_item` for the same `name` with `patch` set to `{ "frame": { "parent": "world", "translation": { ... }, "orientation": { "type": "ov_degrees", "value": { "x": 0, "y": 0, "z": 1, "th": 0 } } } }`. `translation` is the shape's center in world mm.
 
-To change an existing machine-owned obstacle, patch `attributes` for size or shape and `frame` for position or orientation with `update_machine_config_item`. A resource a fragment provides cannot be patched; the fragment has to change.
+To change an existing obstacle, patch `attributes` for size or shape and `frame` for position or orientation.
 
 Verify with `read_machine_config` that the component has a `frame` whose `parent` is set. Without one, the planner never sees the geometry and the arm plans straight through it with no error.
 
@@ -190,8 +190,7 @@ Solution:
 
 1. Read the component with `read_machine_config` and confirm it has a `frame` with `parent` set (`world` for a fixed obstacle)
 2. If not, patch the frame with `update_machine_config_item` as in "Creating or fixing an obstacle"
-3. If the obstacle comes from a fragment, the fragment has to be fixed — the tool cannot patch fragment-provided components
-4. Confirm the shape appears in the 3D scene at the expected place
+3. Confirm the shape appears in the 3D scene at the expected place
 
 ## Troubleshooting: motion planning fails
 
