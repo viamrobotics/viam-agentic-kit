@@ -9,6 +9,10 @@ In the cosmos-tutorial repo, there are `batch_episodes.py` and `oracle_episode.p
 
 when calling these scripts, you'll need credentials, most likely from /etc/viam.json (automatic) or ./viam.json (pass cli arg). the part ID in viam.json should be the same as what you're interacting with through the MCP; if it's the first time you're touching a robot, look up its name and confirm it's the one the user expects.
 
+machine address may not be available directly from the MCP yet. if not, you can synthesize it from machine metadata as `{part.dns_name}.{part.location_id}.viam.cloud`.
+
+for connection trouble: if you get a PermissionDenied error in `dial_ffi`, or other OS-level error, try `sandbox_permissions: "require_escalated"` in the harness.
+
 ## Manual run-throughs
 
 when designing the motions for a robot task, you can do manual runthroughs using mcp commands. your call when to do this in python vs issuing the commands directly, but 'direct' will better for demoing short sequences while the user watches a camera.
