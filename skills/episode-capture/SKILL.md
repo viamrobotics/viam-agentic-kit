@@ -9,6 +9,10 @@ In the cosmos-tutorial repo, there are `batch_episodes.py` and `oracle_episode.p
 
 when calling these scripts, you'll need credentials, most likely from /etc/viam.json (automatic) or ./viam.json (pass cli arg). the part ID in viam.json should be the same as what you're interacting with through the MCP; if it's the first time you're touching a robot, look up its name and confirm it's the one the user expects.
 
+machine address may not be available directly from the MCP yet. if not, you can synthesize it from machine metadata as `{part.dns_name}.{part.location_id}.viam.cloud`.
+
+for connection trouble: if you get a PermissionDenied error in `dial_ffi`, or other OS-level error, try `sandbox_permissions: "require_escalated"` in the harness.
+
 ## Manual run-throughs
 
 when designing the motions for a robot task, you can do manual runthroughs using mcp commands. your call when to do this in python vs issuing the commands directly, but 'direct' will better for demoing short sequences while the user watches a camera.
@@ -25,7 +29,9 @@ The user should give you a `batch_episodes.py` script that you can modify if nee
 
 This can be told to upload a dataset at the end. Use the viam python sdk to download the dataset and inspect the episodes.
 
-For the initial smoke testing runs, create a composite image with a grid of episode end states from different cameras for the user to look at.
+For the initial smoke testing runs, create a contact sheet (composite image with a grid of episode end states from different cameras for the user to look at).
+
+If a run takes longer than expected it may be hung; you can check this by looking at cameras in the scene or querying positions. It's useful to know if there's a hang even before a timeout is triggered, so for an above average run. timeouts should be in sim time where feasible; if you use wall clock timeouts make them 2x slower.
 
 ## Episode count schedule
 
@@ -34,6 +40,18 @@ Start low (5) so the user can investigate them and so you can debug success rate
 You can download datasets through the SDK to inspect video and parquet.
 
 A good number for a starter training run is 50. (A compromise between quality and generation / training time). Go to 100 if the resultant policy needs to be smoother.
+
+once you move on to larger sets which will be used for training, enable perturbations (see below)
+
+Because episode capture takes time, for longer episode runs, prefer to provide --upload-dataset-id to `batch_episodes.py` so those aren't lost. don't mix different experiments in the same dataset, i.e. assume that training will operate on whole datasets.
+
+## perturbations
+
+the default scripts specify nudging as degrees, interval, duration. interval and duration have reasonable durations to begin with. to choose degrees, do a short optimization pass with 0.5 and 1.5 degrees, 5 episodes each, and choose the highest value that's at least 80% successful.
+
+use perturbations on about half of episodes; with the standard episode script, you'll need to do this with two runs targeting the same dataset.
+
+when in doubt, call down to the visuospatial agent for help.
 
 ## success state
 

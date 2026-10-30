@@ -23,6 +23,8 @@ tools like blender or meshy are sometimes available if you need. you can embed U
 
 while you're setting up the workcell, don't call `stop_simulation` to save money, even though the sim is billed per minute; only stop it when the user explicitly asks.
 
+find out if the user is starting from a premade machine they want you to look at via mcp.
+
 ## working with fragments
 
 some configs are based on fragments (shared JSON templates). Unless the user explicitly wants to edit the source fragment, keep the shared fragment unchanged.
