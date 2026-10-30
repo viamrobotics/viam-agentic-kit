@@ -41,6 +41,18 @@ You can download datasets through the SDK to inspect video and parquet.
 
 A good number for a starter training run is 50. (A compromise between quality and generation / training time). Go to 100 if the resultant policy needs to be smoother.
 
+once you move on to larger sets which will be used for training, enable perturbations (see below)
+
+Because episode capture takes time, for longer episode runs, prefer to provide --upload-dataset-id to `batch_episodes.py` so those aren't lost. don't mix different experiments in the same dataset, i.e. assume that training will operate on whole datasets.
+
+## perturbations
+
+the default scripts specify nudging as degrees, interval, duration. interval and duration have reasonable durations to begin with. to choose degrees, do a short optimization pass with 0.5 and 1.5 degrees, 5 episodes each, and choose the highest value that's at least 80% successful.
+
+use perturbations on about half of episodes; with the standard episode script, you'll need to do this with two runs targeting the same dataset.
+
+when in doubt, call down to the visuospatial agent for help.
+
 ## success state
 
 The last frame of an episode should be a success state. E.g. if the task is 'pick up the block', don't then drop the block before ending the episode; end with it picked up.
