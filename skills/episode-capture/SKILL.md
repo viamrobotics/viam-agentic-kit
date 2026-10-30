@@ -29,7 +29,9 @@ The user should give you a `batch_episodes.py` script that you can modify if nee
 
 This can be told to upload a dataset at the end. Use the viam python sdk to download the dataset and inspect the episodes.
 
-For the initial smoke testing runs, create a composite image with a grid of episode end states from different cameras for the user to look at.
+For the initial smoke testing runs, create a contact sheet (composite image with a grid of episode end states from different cameras for the user to look at).
+
+If a run takes longer than expected it may be hung; you can check this by looking at cameras in the scene or querying positions. It's useful to know if there's a hang even before a timeout is triggered, so for an above average run. timeouts should be in sim time where feasible; if you use wall clock timeouts make them 2x slower.
 
 ## Episode count schedule
 
